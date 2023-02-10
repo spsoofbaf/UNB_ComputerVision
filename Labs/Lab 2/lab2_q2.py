@@ -51,11 +51,11 @@ src_image.paste(warped_image, (0, 0), mask=mask_im)
 # Using opencv library
 src_cv = np.float32([p1_src, p2_src, p3_src, p4_src])
 dst_cv = np.float32([p1_dst, p2_dst, p3_dst, p4_dst])
-tform_cv = cv2.getPerspectiveTransform(dst_cv, src_cv)
+tform_cv = cv2.getPerspectiveTransform(src_cv, dst_cv)
 print("\nTransformation matrix (opencv) = \n")
 print(tform_cv)
 
-warped_image_cv = cv2.warpPerspective(dst_image_array, tform_cv, (src_image_width, src_image_height))
+warped_image_cv = cv2.warpPerspective(dst_image_array, np.linalg.inv(tform_cv), (src_image_width, src_image_height))
 
 src_image_array = np.array(src_image_cv)
 mask_im_array = np.array(mask_im)

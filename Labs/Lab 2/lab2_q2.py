@@ -2,8 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from skimage import transform, img_as_ubyte
 from PIL import ImageDraw, Image
+import cv2
 
 src_image = Image.open("Highway billboard.jpg")
+src_image_cv = src_image.copy()
 dst_image = Image.open("Oil painting.jpg")
 
 src_image_width = src_image.size[0]
@@ -44,21 +46,50 @@ draw = ImageDraw.Draw(mask_im)
 draw.polygon((p1_src, p2_src, p3_src, p4_src), outline=1, fill=255)
 
 # Pasting the image
-src_image.paste(warped_image.resize((900, 600)), (0, 0), mask=mask_im)
+src_image.paste(warped_image, (0, 0), mask=mask_im)
+
+# Using opencv library
+src_cv = np.float32([p1_src, p2_src, p3_src, p4_src])
+dst_cv = np.float32([p1_dst, p2_dst, p3_dst, p4_dst])
+tform_cv = cv2.getPerspectiveTransform(dst_cv, src_cv)
+print("\nTransformation matrix (opencv) = \n")
+print(tform_cv)
+
+warped_image_cv = cv2.warpPerspective(dst_image_array, tform_cv, (src_image_width, src_image_height))
+
+src_image_array = np.array(src_image_cv)
+mask_im_array = np.array(mask_im)
+
+warped_image_masked = cv2.bitwise_and(warped_image_cv, warped_image_cv, mask=mask_im_array)
+src_image_masked = cv2.bitwise_and(src_image_array, src_image_array, mask=~mask_im_array)
+
+result = cv2.add(src_image_masked, warped_image_masked)
 
 # Plotting the result
-fig, ax = plt.subplots(nrows=1, ncols=3)
+fig, ax = plt.subplots(nrows=2, ncols=3)
 
-ax[0].imshow(dst_image, cmap="gray")
-ax[0].axis('off')
-ax[0].title.set_text('Original Image')
+ax[0][0].imshow(dst_image, cmap="gray")
+ax[0][0].axis('off')
+ax[0][0].title.set_text('Original Image')
 
-ax[1].imshow(warped_image, cmap="gray")
-ax[1].axis('off')
-ax[1].title.set_text('Warped Image')
+ax[0][1].imshow(warped_image, cmap="gray")
+ax[0][1].axis('off')
+ax[0][1].title.set_text('Warped Image')
 
-ax[2].imshow(src_image, cmap="gray")
-ax[2].axis('off')
-ax[2].title.set_text('Result')
+ax[0][2].imshow(src_image, cmap="gray")
+ax[0][2].axis('off')
+ax[0][2].title.set_text('Result')
+
+ax[1][0].imshow(dst_image, cmap="gray")
+ax[1][0].axis('off')
+ax[1][0].title.set_text('Original Image')
+
+ax[1][1].imshow(warped_image_cv, cmap="gray")
+ax[1][1].axis('off')
+ax[1][1].title.set_text('Warped Image (cv2)')
+
+ax[1][2].imshow(result, cmap="gray")
+ax[1][2].axis('off')
+ax[1][2].title.set_text('Result (cv2)')
 
 plt.show()

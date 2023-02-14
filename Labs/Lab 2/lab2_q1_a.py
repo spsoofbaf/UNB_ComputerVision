@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from PIL import ImageDraw, Image
 import numpy as np
 
-from skimage import transform
+from skimage import transform, data, img_as_float
 
 tform = transform.SimilarityTransform(scale=0.5, rotation=3 * math.pi / 8,
                                       translation=(20, 30))

@@ -4,7 +4,8 @@ import numpy as np
 from skimage import data
 from skimage import transform
 
-image = data.text()
+# image = data.text()
+image = data.coffee()
 h = np.array([[1, -0.5, 100], [0.1, 0.9, 50], [0.0015, 0.0015, 1]])
 
 tform = transform.ProjectiveTransform(matrix=h)

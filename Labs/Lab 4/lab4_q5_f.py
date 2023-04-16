@@ -81,17 +81,3 @@ ax2[1].set_title("SIFT")
 
 plt.tight_layout()
 plt.show()
-
-
-# CENSURE, ORB, and SIFT are feature extraction methods used to extract key points and descriptors from images. Here's a brief comparison of these methods:
-#
-# CENSURE (Center Surround Extremas for Realtime Feature Detection and Matching): It is a scale-invariant feature detector and descriptor that detects keypoints in an image using a center surround approach. It uses a Laplacian of Gaussian (LoG) filter to find scale-space extrema and detects keypoints by analyzing the scale-space extrema with a center-surround difference-of-Gaussian (DoG) filter. CENSURE is known for its fast performance and its ability to detect keypoints in real-time.
-#
-# ORB (Oriented FAST and Rotated BRIEF): ORB is a fast and efficient alternative to SIFT and SURF for feature extraction. It is a scale and rotation invariant method that uses a combination of corner detection and binary descriptors to extract features. ORB uses the FAST algorithm to detect keypoints and then computes BRIEF (Binary Robust Independent Elementary Features) descriptors, which are binary strings that represent the local image patch around the keypoint.
-#
-# SIFT (Scale-Invariant Feature Transform): SIFT is a feature detection and description algorithm that is widely used in computer vision. It is a scale-invariant method that detects keypoints at different scales and orientations. SIFT works by convolving the image with a series of Gaussian filters to obtain scale-space representations of the image. It then detects keypoints at different scales and orientations by analyzing the difference of Gaussian (DoG) pyramid. Finally, it computes a descriptor for each keypoint by analyzing the local gradient orientations.
-#
-# In terms of performance, ORB is generally faster than SIFT and CENSURE due to its simpler feature extraction method. However, SIFT and CENSURE tend to be more robust to changes in lighting and viewpoint, and may provide more accurate feature descriptors in some cases.
-#
-# When it comes to accuracy, the choice of feature extraction method depends on the specific application and image content. It is important to test each method on the specific dataset and task to determine which method works best.
-

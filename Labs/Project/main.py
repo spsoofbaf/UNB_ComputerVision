@@ -80,9 +80,6 @@ def main():
     # Apply Canny edge detection with gaussian smoothing (sigma=3)
     edges3 = feature.canny(image, sigma=3)
 
-    # # Apply Canny edge detection with gaussian smoothing (sigma=4)
-    # edges4 = feature.canny(image, sigma=4)
-
     # Apply bilateral filter
     bilateral = skimage.restoration.denoise_bilateral(image, sigma_spatial=3, win_size=8)
     # Apply Canny edge detection to smooth image with bilateral filter
@@ -113,8 +110,6 @@ def main():
     ax[2].set_title("Canny with gaussian smoothing (sigma=2)")
     ax[3].imshow(edges3, cmap=plt.cm.gray)
     ax[3].set_title("Canny with gaussian smoothing (sigma=3)")
-    # ax[4].imshow(edges4, cmap=plt.cm.gray)
-    # ax[4].set_title("Canny with gaussian smoothing (sigma=4)")
     ax[4].imshow(edges5, cmap=plt.cm.gray)
     ax[4].set_title("Canny with bilateral filter")
     # ax[4].imshow(edges5 + 0.4 * (0.9 - image) + 0.7 * (edges2), cmap=plt.cm.gray)
@@ -131,7 +126,6 @@ def main():
     method_names = ['Canny filter without smoothing',
                     'Canny filter with gaussian smoothing (sigma=2)',
                     'Canny filter with gaussian smoothing (sigma=3)',
-                    # 'Canny filter with gaussian smoothing (sigma=4)',
                     'Canny filter with bilateral filter',
                     'Canny filter with guided filter',
                     'Canny filter with median filter']
